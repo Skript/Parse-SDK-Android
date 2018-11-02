@@ -3942,7 +3942,7 @@ public class ParseObject implements Parcelable {
                     : createdAt;
             serverData = Collections.unmodifiableMap(new HashMap<>(builder.serverData));
             isComplete = builder.isComplete;
-            availableKeys = Collections.synchronizedSet(builder.availableKeys);
+            availableKeys = new HashSet<>(builder.availableKeys);
         }
 
         State(Parcel parcel, String clazz, ParseParcelDecoder decoder) {
@@ -4076,7 +4076,7 @@ public class ParseObject implements Parcelable {
                 objectId = state.objectId();
                 createdAt = state.createdAt();
                 updatedAt = state.updatedAt();
-                availableKeys = Collections.synchronizedSet(state.availableKeys());
+                availableKeys = state.availableKeys();
                 for (String key : state.keySet()) {
                     serverData.put(key, state.get(key));
                     availableKeys.add(key);
