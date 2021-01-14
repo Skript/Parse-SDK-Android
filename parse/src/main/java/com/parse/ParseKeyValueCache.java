@@ -54,15 +54,18 @@ class ParseKeyValueCache {
 
     /* package for tests */
     static void initialize(File path) {
-        if (!path.isDirectory() && !path.mkdir()) {
-            throw new RuntimeException("Could not create ParseKeyValueCache directory");
-        }
         directory = path;
     }
 
     private static File getKeyValueCacheDir() {
         if (directory != null && !directory.exists()) {
             directory.mkdir();
+            if (!directory.exists()) {
+                throw new RuntimeException("ParseKeyValueCache does not exist");
+            }
+            if (!directory.isDirectory()) {
+                throw new RuntimeException("ParseKeyValueCache is not a directory");
+            }
         }
         return directory;
     }
